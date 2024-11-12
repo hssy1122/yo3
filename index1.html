@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ux2</title>
+</head>
+<style type="text/css">
+       
+     @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+       body { margin: 0px 0px;
+            background-color: #191919; /* 기본 배경색 */
+            color: white; /* 기본 텍스트 색상 */
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* 전체 페이지의 좌우 스크롤 방지 */
+            height: 100vh; /* 전체 화면 높이 설정 */
+               font-family: 'Pretendard-Regular'
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #ffffff;
+            font-family: 'Pretendard-Regular'
+        }
+
+        /* 기본 레이아웃 스타일 */
+        .container {
+            padding: 0; /* 모든 방향의 기본 패딩 제거 */
+            max-width: calc(100% - 35px); /* 전체 화면 너비에서 왼쪽 여백 35px만큼 차감 */
+            margin-left: 0px; 
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* 콘텐츠 왼쪽 정렬 */
+            margin: 0px 0px;
+        }
+
+        .header {
+    width: 100%; /* 각 섹션의 기본 너비를 100%로 설정 */
+    height: 136px;
+    box-sizing: border-box; /* 요소의 너비와 높이 계산에 패딩과 보더를 포함 */
+    margin: 0; /* 상하단 여백만 적용, 좌우 여백 제거 */
+    padding: 45px 0; /* 수직 패딩만 적용 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: flex-start; /* 수평 정렬을 왼쪽 정렬로 설정 */
+    background-color: #191919;
+     position: fixed; /* 헤더를 고정 */
+    z-index: 2; /* 헤더의 z-index를 2로 설정 */
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* 그림자 효과 추가 */
+}
+
+.header::after {
+    content: ''; /* 가상 요소를 생성하기 위한 설정 */
+    position: absolute; /* 절대 위치 지정 */
+    top: 100%; /* 헤더의 바로 아래에 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    width: 100%; /* 너비를 100%로 설정 */
+    height: 15px; /* 그림자 높이 설정 */
+    background: linear-gradient(to bottom, rgba(25, 25, 25, 0.5), rgba(25, 25, 25, 0)); /* 그라데이션 설정 */
+    z-index: 1; /* 헤더 아래로 설정 (2보다 낮은 값) */
+}
+
+        .header-content {
+            display: flex; /* 플렉스 컨테이너로 설정 */
+            align-items: center; /* 수직 중앙 정렬 */
+            gap: 20px; /* 요소들 간의 간격 조절 */
+              margin-top: 25px; /* header 아래에서 25px 위에 위치하도록 설정 */
+              margin-left: 50px;
+        }
+
+        .header-content img {
+            height: 35px; /* 이미지 높이 설정 */
+            margin-left: 360px;
+        }
+
+
+        .header-image {
+    margin-left: -350px; /* 왼쪽 이미지에 대한 마진 */
+    margin-right: -340px; /* 오른쪽 이미지에 대한 마진 */
+    height: 45px; /* 이미지 높이 설정 */
+}
+
+   .content {
+    background-color: #191919; /* 콘텐츠 배경색 */
+    padding: 0px 0; /* 내부 여백 설정 */
+    margin: 0; /* 외부 여백 제거 */
+    position: relative;
+margin-top: 250px;
+    z-index: 0; /* 콘텐츠의 z-index를 0으로 설정 */
+    height: calc(60vh - 120px); /* 화면 전체 높이에서 헤더와 푸터의 높이를 뺀 값 */
+    width: 100%;
+    overflow: hidden; /* 전체 영역에서는 스크롤을 막고 내부 콘텐츠에서만 허용 */
+}
+
+/* 스크롤되는 내부 영역 */
+.content-area {
+    padding: 0px;
+    max-width: calc(100% - 728px); /* 박스의 너비만큼 차감하여 유동적 너비 설정 */
+    margin-left: auto; /* 왼쪽 고정된 박스에 영향을 받지 않도록 오른쪽으로 내용 배치 */
+    overflow-y: auto; /* 내부 스크롤 가능 */
+}
+
+  .content-inner {
+            max-height: 100%; /* 부모 컨테이너(.content) 안에서만 스크롤이 가능하게 설정 */
+            overflow-y: auto; /* 수직 스크롤 허용 */
+        }
+
+        .box {
+    background-color: #303030;
+    height: 75px;
+    width: 678px; /* 고정된 박스 너비 */
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 50px 0;
+    border-radius: 5px;
+    font-size: 18px;   
+    color: #7FFF5E;
+    padding-left: 30px;
+    position: fixed; /* 화면에 고정 */
+    top: 110px;
+    left: 50px; /* 왼쪽에 고정된 위치 */
+    z-index: 2;
+    font-weight: 600;
+     font-family: 'Pretendard-semibold';
+}
+
+
+  .box2 {
+    background-color: #303030; /* 박스 색상 */
+    height: 75px; /* 박스 높이 */
+    width: 100px; /* 박스 너비 */
+    display: flex; /* 내용을 중앙에 정렬하기 위해 flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: left; /* 수평 중앙 정렬 */
+    margin: 0px 0px; /* 상하 간격을 위해 여백 추가 */
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: 'Pretendard-Regular';
+    padding-left: 86px;
+    position: sticky; /* 스크롤 시 고정되도록 설정 */
+    top: 0; /* 스크롤 시 화면 상단에 고정 */
+    z-index: 1; /* z-index를 높여 다른 요소 위에 위치 */
+       margin-left: 350px;
+       color: #AAAAAA;
+}
+
+.footer {
+    background-color: #191919;
+    padding: 30px 0; /* 수직 패딩만 적용 */
+    box-shadow: 0 -15px -15px -15px rgba(0, 0, 0, 1);
+    z-index: 1; /* 헤더를 상위 레벨로 지정 */
+    height: 96px; /* 높이 설정 */
+    display: flex; /* 입력창과 버튼 정렬을 위한 flex 설정 */
+    justify-content: center; /* 요소들을 가로 중앙에 배치 */
+    align-items: center; /* 요소들을 수직 중앙에 배치 */
+    margin-left: 50px;
+
+    font-family: 'Pretendard-Regular'
+}
+
+.footer input {
+    padding: 0 0 0 15px; /* 입력 필드 내부 여백 */
+    margin-right: 10px; /* 입력 필드와 버튼 간 여백 */
+    border-radius: 5px; /* 둥근 모서리 */
+    border: 1px solid #404040; /* 테두리 색상 */
+    background-color: #404040; /* 배경색 설정 */
+    height: 60px; /* 입력 필드 높이 */
+    width: 549px; /* 입력 필드 너비 */
+    color: #878787; /* 기본 글자 색상 */
+    font-size: 18px;
+}
+
+.footer input::placeholder {
+    color: #878787; /* 플레이스홀더 색상 */
+     font-family: 'Pretendard-Regular'
+}
+
+.footer button {
+    padding: 0; /* 버튼 내부 여백 제거 */
+    border: none; /* 테두리 없음 */
+    background-color: #404040; /* 버튼 색상 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 클릭 가능한 커서 모양 */
+    width: 60px; /* 버튼 너비 60px */
+    height: 60px; /* 버튼 높이 60px */
+    display: flex; /* 버튼 내부 이미지 정렬을 위해 flex 사용 */
+    align-items: center; /* 내부 요소 수직 중앙 정렬 */
+    justify-content: center; /* 내부 요소 수평 중앙 정렬 */
+}
+
+.footer button img {
+    width: 28px; /* 이미지 너비 조정 */
+    height: 28px; /* 이미지 높이 조정 */
+    margin-left: -5px;
+}
+
+.footer img {
+    width: 25px; /* 이미지 너비 조정 */
+    height: 25px; /* 이미지 높이 조정 */
+}
+
+.footer-image-container {
+    background-color: #404040; /* 배경색 설정 */
+    width: 60px; /* 이미지와 동일한 너비 */
+    height: 60px; /* 이미지와 동일한 높이 */
+    margin-right: 10px; /* 이미지와 입력창 사이 마진 */
+    display: flex; /* 이미지를 중앙에 정렬하기 위해 flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    border-radius: 5px; /* 필요 시 모서리 둥글게 처리 */
+}
+
+
+
+        /* 유저 정보 컨테이너 */
+        .user-info {
+            display: flex;
+            align-items: center; /* 수직 중앙 정렬 */
+            margin-left: 50px;
+        }
+
+        /* 유저 이미지 스타일 */
+        .user-image {
+            width: 50px; /* 이미지 너비 */
+            height: 50px; /* 이미지 높이 */
+            border-radius: 50%; /* 둥근 이미지 */
+            margin-right: 15px; /* 이미지와 텍스트 사이 여백 */
+            background-color: #c5c5c5;
+        }
+
+        /* 유저명 스타일 */
+        .user-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 10px; /* 유저명과 역할 사이의 간격 */
+            color: #c5c5c5;
+
+        }
+
+        /* 메시지 스타일 */
+        .user-message {
+            font-weight: lighter; /* 메시지는 얇은 글씨 */
+            font-size: 18px; /* 글자 크기 */
+            margin: 0 0 15px 0; /* 메시지와 다음 요소 간 여백 */
+            text-align: left; /* 왼쪽 정렬 */
+            margin: 5px 115px;
+            color: #ffffff;
+            line-height: 1.5;
+
+        }
+
+        /* 유저 메시지를 담는 박스 스타일 */
+.user-message-box {
+    background-color: #7FFF5E; /* 박스 배경색 */
+    color: #ffffff; /* 글자색 */
+    width: 450px; /* 고정 너비 */
+    padding: 15px; /* 내부 여백 */
+    margin: 10px auto; /* 상하 10px, 좌우 자동 중앙 정렬 */
+    border-radius: 5px; /* 박스 모서리 둥글게 */
+    word-wrap: break-word; /* 긴 텍스트를 자동 줄바꿈 */
+    box-sizing: border-box; /* 패딩과 보더를 전체 크기에 포함 */
+    text-align: left; /* 글자 왼쪽 정렬 */
+    margin-left: 115px;
+             line-height: 1.3;
+}
+
+
+        /* 전체 컨테이너 스타일 */
+        .new-paragraph {
+            width: 100%; /* 전체 너비를 채우도록 설정 */
+            text-align: left; /* 왼쪽 정렬 */
+            padding: 10px 0; /* 위아래 패딩 추가 */
+        }
+
+        .box-small {
+    background-color: #404040; /* 박스 색상 */
+    height: 30px; /* 박스 높이 */
+    width: 70px; /* 박스 너비 */
+    display: inline-flex; /* 가로로 나열하기 위해 inline-flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin: 5px; /* 상자 간 마진 */
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 14px;
+    margin-left: 115px;
+    color: #aaaaaa;
+}
+   .box-small2 {
+    background-color: #404040; /* 박스 색상 */
+    height: 30px; /* 박스 높이 */
+    width: 70px; /* 박스 너비 */
+    display: inline-flex; /* 가로로 나열하기 위해 inline-flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin: 5px; /* 상자 간 마진 */
+    border-radius: 5px; /* 둥근 모서리 */
+     font-size: 14px;
+    color:#aaaaaa;
+}
+
+ .box-small3 {
+    background-color: #404040; /* 박스 색상 */
+    height: 30px; /* 박스 높이 */
+    width: 30px; /* 박스 너비 */
+    display: inline-flex; /* 가로로 나열하기 위해 inline-flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-left: 225px; /* 상자 간 마진 */
+    border-radius: 5px; /* 둥근 모서리 */
+     font-size: 14px;
+
+}
+ .box-small4 {
+    background-color: #404040; /* 박스 색상 */
+    height: 30px; /* 박스 높이 */
+    width: 30px; /* 박스 너비 */
+    display: inline-flex; /* 가로로 나열하기 위해 inline-flex 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-left: 10px; /* 상자 간 마진 */
+    border-radius: 5px; /* 둥근 모서리 */
+     font-size: 14px;
+
+}
+
+</style>
+
+
+<body>
+
+	   <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>CITIZEN KANE</h1>
+                <img src="Group 551.png" alt="Image 82" class="header-image">
+                <img src="image 82.png" alt="Group 551" class="header-image">
+            </div>
+        </div>
+          <div class="content">
+            <div class="content-inner">
+                <div class="box">나의 시선 공유하기
+                <div class="box2">시선 로그</div></div>
+                <div id="content-area">
+                    
+
+                </div>
+            </div>
+        </div>
+           <div class="footer">
+        <div class="footer-image-container">
+    <img src="Group 853.png" alt="Image" class="footer-image"> <!-- 이미지 추가 -->
+</div>
+    <input type="text" id="footer-input" placeholder="글을 입력해주세요">
+    <button id="add-content"><img src="Group 764.png"></button>
+</div>
+
+<!-- 글 상자 컨테이너 추가 -->
+<div id="content-area"></div>
+
+<script>
+// .box 요소 선택
+const boxElement = document.querySelector('.box');
+const footerInputElement = document.querySelector('.footer input');
+const footerButtonElement = document.querySelector('.footer button');
+const footerImage = document.querySelector('.footer-image'); // footer 이미지 요소 선택
+const footerButtonImage = footerButtonElement.querySelector('img'); // 버튼의 이미지 요소 선택
+const placeholderText = "글을 입력해주세요"; // 입력창의 기본 텍스트
+const footerInput = document.getElementById('footer-input'); // 입력창 요소 선택
+const footerImageContainer = document.querySelector('.footer-image-container'); // footer 이미지 컨테이너 선택
+let isBoxClicked = false; // 박스가 클릭되었는지 여부를 확인하는 변수
+
+// 기존 이미지 경로 저장
+const originalFooterImageSrc = footerImage.src; // 푸터 이미지의 원래 경로
+const originalButtonImageSrc = footerButtonImage.src; // 버튼 이미지의 원래 경로
+
+// 입력창 기본 텍스트 설정
+footerInput.placeholder = placeholderText;
+
+// 클릭 이벤트 리스너 추가
+boxElement.addEventListener('click', function () {
+    boxElement.classList.toggle('clicked'); // 클릭 시 스타일 토글
+
+    if (boxElement.classList.contains('clicked')) {
+        isBoxClicked = true;
+        // 클릭된 상태에서는 색상을 #596CF6로 변경
+        footerInputElement.style.backgroundColor = '#7FFF5E';
+        footerInputElement.style.color = '#191919'; // 입력 텍스트 색상도 흰색으로 변경
+        footerButtonElement.style.backgroundColor = '#7FFF5E';
+        footerImage.style.backgroundColor = '#7FFF5E'; // footer 이미지 상자 색상 변경
+        footerImageContainer.style.backgroundColor = '#7FFF5E'; // footer 이미지 컨테이너 색상 변경
+        footerImage.src = 'Group 8531.png'; // 클릭 시 푸터 이미지 변경
+        footerButtonImage.src = 'Group 7641.png'; // 버튼 이미지도 동일하게 변경
+        footerInputElement.placeholder = ''; // 기본 텍스트 흰색으로 변경
+    } else {
+        isBoxClicked = false;
+        // 클릭 해제된 상태에서는 원래 색상으로 복원
+        resetFooterStyles(); // 원래 색상으로 복원하는 함수 호출
+    }
+});
+
+// 입력 중일 때 글자색을 흰색으로 설정
+footerInput.addEventListener('input', function () {
+    footerInput.style.color = '#191919'; // 입력할 때 글자 색상 흰색으로 변경
+});
+
+// 추가 버튼 클릭 시 내용 추가
+const addButton = document.getElementById('add-content');
+const contentArea = document.getElementById('content-area');
+
+// 저장된 내용 불러오기
+function loadContent() {
+    const savedContent = localStorage.getItem('content'); // localStorage에서 내용 가져오기
+    if (savedContent) {
+        const paragraphs = JSON.parse(savedContent); // JSON 문자열을 객체로 변환
+        paragraphs.forEach(text => {
+            const paragraph = createParagraph(text.user, text.message, text.color); // 각 메시지 생성
+            contentArea.appendChild(paragraph); // content-area에 추가
+        });
+    }
+}
+
+// 새로운 메시지 요소 생성
+function createParagraph(userName, message, color) {
+    const paragraphContainer = document.createElement('div');
+    paragraphContainer.className = 'new-paragraph'; // 스타일 클래스 추가
+
+    // 유저 정보 컨테이너
+    const userInfoContainer = document.createElement('div');
+    userInfoContainer.className = 'user-info';
+
+    // 유저 이미지 추가
+    const userImage = document.createElement('img');
+    userImage.src = 'Mask group.png'; // 기본 이미지 URL 설정
+    userImage.alt = `${userName}의 이미지`; // 이미지 대체 텍스트 설정
+    userImage.className = 'user-image';
+
+    // 유저명 스팬 생성 및 설정
+    const userNameSpan = document.createElement('span');
+    userNameSpan.className = 'user-name';
+    userNameSpan.textContent = userName + ' ' + generateRandomNumber(); // 유저명 뒤에 랜덤 숫자 추가
+
+    // 메시지 컨테이너 생성 및 설정
+    const messageBox = document.createElement('div');
+    messageBox.className = 'user-message-box'; // 메시지 박스 스타일 클래스 추가
+    messageBox.textContent = message; // 메시지 텍스트 설정
+    messageBox.style.backgroundColor = color; // 저장된 색상 적용
+
+    // 메시지 색상 설정: 색상이 초록색일 경우 글자색을 #191919로 변경
+    if (color === 'rgb(127, 255, 94)') { // 색상 확인 (초록색)
+        messageBox.style.color = '#191919'; // 글자색을 #191919로 변경
+    } else {
+        messageBox.style.color = '#ffffff'; // 다른 색상일 경우 흰색으로 설정
+    }
+
+    // 유저 정보 컨테이너에 이미지와 유저명 추가
+    userInfoContainer.appendChild(userImage);
+    userInfoContainer.appendChild(userNameSpan);
+
+    // 전체 컨테이너에 유저 정보 및 메시지 박스 추가
+    paragraphContainer.appendChild(userInfoContainer);
+    paragraphContainer.appendChild(messageBox);
+
+    // 작은 상자 추가
+    const smallBox1 = document.createElement('div');
+    smallBox1.className = 'box-small'; // 첫 번째 작은 상자
+    smallBox1.textContent = '보충하기'; // "보충하기" 텍스트 추가
+
+    const smallBox2 = document.createElement('div');
+    smallBox2.className = 'box-small2'; // 두 번째 작은 상자
+    smallBox2.textContent = '반박하기'; // "반박하기" 텍스트 추가
+
+    const smallBox3 = document.createElement('div');
+    smallBox3.className = 'box-small3'; // 세 번째 작은 상자
+
+    const smallBox4 = document.createElement('div');
+    smallBox4.className = 'box-small4'; // 네 번째 작은 상자
+
+    // 네 번째 상자에 이미지 추가
+    const image1 = document.createElement('img'); // 첫 번째 이미지 요소 생성
+    image1.src = 'group 1062.png'; // 첫 번째 이미지 URL 설정
+    image1.alt = '북 이미지'; // 이미지 대체 텍스트 설정
+    image1.style.width = '15px'; // 이미지 폭 설정 (필요에 따라 조정 가능)
+    image1.style.height = '18px'; // 이미지 높이 설정 (필요에 따라 조정 가능)
+    smallBox4.appendChild(image1); // smallBox4에 첫 번째 이미지 추가
+
+    // 세 번째 상자에 이미지 추가
+    const image2 = document.createElement('img'); // 두 번째 이미지 요소 생성
+    image2.src = 'group 1351.png'; // 두 번째 이미지 URL 설정
+    image2.alt = '북 이미지'; // 이미지 대체 텍스트 설정
+    image2.style.width = '17px'; // 이미지 폭 설정 (필요에 따라 조정 가능)
+    image2.style.height = '19px'; // 이미지 높이 설정 (필요에 따라 조정 가능)
+    image2.style.marginBottom = '1px'; // 이미지를 위로 1px 이동
+    smallBox3.appendChild(image2); // smallBox3에 두 번째 이미지 추가
+
+    // 작은 상자를 전체 컨테이너에 추가
+    paragraphContainer.appendChild(smallBox1);
+    paragraphContainer.appendChild(smallBox2);
+    paragraphContainer.appendChild(smallBox3);
+    paragraphContainer.appendChild(smallBox4);
+
+    // 클릭 이벤트 리스너 추가
+    smallBox3.addEventListener('click', () => {
+        // smallBox3 클릭 시 동작
+        smallBox3.style.backgroundColor = '#7FFF5E'; // 배경 색상 변경
+        image2.src = 'Group 13511.png'; // 새 이미지 URL로 변경 (필요에 따라 변경)
+    });
+
+    smallBox4.addEventListener('click', () => {
+        // smallBox4 클릭 시 동작
+        smallBox4.style.backgroundColor = '#7FFF5E'; // 배경 색상 변경
+        image1.src = 'Group 10621.png'; // 새 이미지 URL로 변경 (필요에 따라 변경)
+    });
+
+    return paragraphContainer;
+}
+
+// 랜덤한 4자리 숫자 생성
+function generateRandomNumber() {
+    return Math.floor(1000 + Math.random() * 9000); // 1000에서 9999 사이의 랜덤 숫자 생성
+}
+
+// 추가 버튼 클릭 시 내용 추가
+addButton.addEventListener('click', function () {
+    const userName = '유저'; // 기본 사용자명 설정
+    const message = footerInput.value.trim();
+
+    if (message) {
+        const color = footerInputElement.style.backgroundColor; // 현재 입력창 색상 가져오기
+        const newElement = createParagraph(userName, message, color); // 메시지와 색상 함께 생성
+
+        contentArea.appendChild(newElement); // content-area에 추가
+        saveContent(userName, message, color); // localStorage에 내용 저장
+        footerInput.value = ''; // 입력 필드 초기화
+
+        // Reset input field style after submission
+        resetFooterStyles(); // 원래 색상으로 복원하는 함수 호출
+    }
+});
+
+// footer의 모든 스타일을 원래 색상으로 복원하는 함수
+function resetFooterStyles() {
+    footerInputElement.style.backgroundColor = '#404040';
+    footerInputElement.style.color = '#878787'; // 기본 텍스트 색상
+    footerButtonElement.style.backgroundColor = '#404040'; // 버튼 색상 원래대로
+    footerImage.style.backgroundColor = '#404040'; // footer 이미지 상자 색상 원래대로
+    footerImageContainer.style.backgroundColor = '#404040'; // footer 이미지 컨테이너 색상 원래대로
+    footerImage.src = originalFooterImageSrc; // 원래 이미지로 복원
+    footerButtonImage.src = originalButtonImageSrc; // 버튼 이미지도 원래 이미지로 복원
+    footerInputElement.placeholder = placeholderText; // 기본 텍스트 원래 색상으로 변경
+}
+
+// 내용 저장
+function saveContent(userName, message, color) {
+    const savedContent = localStorage.getItem('content') || '[]'; // 기존 저장된 내용 불러오기
+    const paragraphs = JSON.parse(savedContent);
+    paragraphs.push({ user: userName, message: message, color: color }); // 새로운 메시지 추가
+    localStorage.setItem('content', JSON.stringify(paragraphs)); // localStorage에 저장
+}
+
+// 페이지 로드 시 저장된 내용 불러오기
+window.addEventListener('load', function () {
+    loadContent(); // 저장된 내용 불러오기
+});
+
+
+</script>
+
+
+</body>
+</html>
